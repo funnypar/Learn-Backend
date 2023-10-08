@@ -1,0 +1,26 @@
+[
+ {
+	 "id":1,
+	 "name":"Mopano",
+	 "age":23,
+	 "city":"Tehran",
+	 "country":"Iran",
+	 "information":"He likes to play football and read books !"
+ },
+ {
+ 	"id":2,
+         "name":"Parsam",
+         "age":18,
+         "city":"Tehran",
+         "country":"Iran",
+         "information":"He likes to play football and listen to music !"
+ },
+ {
+ 	"id":3,
+         "name":"Jadi",
+         "age":45,
+         "city":"Tehran",
+         "country":"Iran",
+         "information":"He likes to code a lot and read books ! Also he makes Radio Jadi !!!"
+ }
+]
