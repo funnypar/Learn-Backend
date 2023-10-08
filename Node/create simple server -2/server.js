@@ -10,6 +10,11 @@ const server = http.createServer((req, res) => {
         res.end("Hi parsam !");
     } else if (req.url == "/mopano") {
         res.end("Hi mopano !");
+    } else {
+        res.writeHead(404, {
+            "Content-type": "text/html",
+        });
+        res.end("<h1>Page not found !<h1>");
     }
 });
 // start server
