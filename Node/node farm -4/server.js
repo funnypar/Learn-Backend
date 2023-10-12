@@ -14,9 +14,12 @@ const productData = fs.readFileSync(
 );
 const cardData = fs.readFileSync(`${__dirname}/templates/card.html`, "utf-8");
 // ---------------------------------- Functions -------------------------------------
-const cardRep = (template, card) => {
+const templateRep = (template, card) => {
     let output = template.replace(/{%IMAGE%}/g, card.image);
     output = output.replace(/{%PRODUCTNAME%}/g, card.productName);
+    output = output.replace(/{%FROM%}/g, card.from);
+    output = output.replace(/{%NUTRIENTS%}/g, card.nutrients);
+    output = output.replace(/{%DESCRIPTION%}/g, card.description);
     output = output.replace(/{%QUANTITY%}/g, card.quantity);
     output = output.replace(/{%PRICE%}/g, card.price);
     output = output.replace(/{%ID%}/g, card.id);
@@ -27,24 +30,31 @@ const cardRep = (template, card) => {
 };
 // ---------------------------------- server ----------------------------------------
 const server = http.createServer((req, res) => {
+    const { query, pathname } = url.parse(`${req.url}`, true);
     // root
-    if (req.url == "/") {
+    if (pathname == "/") {
         res.end("Hi from server");
         // api
-    } else if (req.url == "/api") {
+    } else if (pathname == "/api") {
         res.writeHead(200, { "Content-type": "application/json" });
         res.end(apiData);
         // overview
-    } else if (req.url == "/overview") {
+    } else if (pathname == "/overview") {
         // Write a head
         res.writeHead(200, { "Content-type": "text/html" });
         // Create cards
-        let cards = apiJs.map((item) => cardRep(cardData, item)).join("");
+        let cards = apiJs.map((item) => templateRep(cardData, item)).join("");
         // Put cards in overview
         let overview = overviewData.replace(/{%PRODUCT_CARD%}/g, cards);
         // Show them to the user
         res.end(overview);
         // not found
+    } else if (pathname == "/product") {
+        res.writeHead(200, { "Content-type": "text/html" });
+        // replace product data
+        let product = templateRep(productData, apiJs[query.id]);
+        // send response
+        res.end(product);
     } else {
         res.writeHead(404, { "Content-type": "text/html" });
         res.end("<h1>Page Not Found !!!</h1>");
