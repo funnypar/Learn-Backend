@@ -1,6 +1,10 @@
+// --------------------------------- core modules -----------------------------------
 const fs = require("fs");
 const http = require("http");
 const url = require("url");
+// --------------------------------- own modules ------------------------------------
+const templateRep = require("./modules/templateRep");
+
 // ---------------------------------- Datas -----------------------------------------
 const apiData = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const apiJs = JSON.parse(apiData);
@@ -13,21 +17,6 @@ const productData = fs.readFileSync(
     "utf-8"
 );
 const cardData = fs.readFileSync(`${__dirname}/templates/card.html`, "utf-8");
-// ---------------------------------- Functions -------------------------------------
-const templateRep = (template, card) => {
-    let output = template.replace(/{%IMAGE%}/g, card.image);
-    output = output.replace(/{%PRODUCTNAME%}/g, card.productName);
-    output = output.replace(/{%FROM%}/g, card.from);
-    output = output.replace(/{%NUTRIENTS%}/g, card.nutrients);
-    output = output.replace(/{%DESCRIPTION%}/g, card.description);
-    output = output.replace(/{%QUANTITY%}/g, card.quantity);
-    output = output.replace(/{%PRICE%}/g, card.price);
-    output = output.replace(/{%ID%}/g, card.id);
-    if (!card.organic) {
-        output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic");
-    }
-    return output;
-};
 // ---------------------------------- server ----------------------------------------
 const server = http.createServer((req, res) => {
     const { query, pathname } = url.parse(`${req.url}`, true);
