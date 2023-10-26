@@ -21,6 +21,18 @@ app.get("/api/v1/tours", (req, res) => {
         },
     });
 });
+// get one tour
+app.get("/api/v1/tours/:id", (req, res) => {
+    const tour = tours.find((el) => el.id === +req.params.id);
+
+    res.status(200).json({
+        status: "success",
+        date: new Date().toString(),
+        data: {
+            tour,
+        },
+    });
+});
 // routing-post
 app.post("/api/v1/tours", (req, res) => {
     // create new id
