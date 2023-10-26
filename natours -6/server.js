@@ -10,8 +10,8 @@ const tours = JSON.parse(
 // ----------------------------------- App --------------------------------------
 const app = express();
 app.use(express.json());
-// routing-get
-app.get("/api/v1/tours", (req, res) => {
+// ----------------------------------- Functions --------------------------------
+const getAllTours = (req, res) => {
     res.status(200).json({
         status: "success",
         results: tours.length,
@@ -20,9 +20,8 @@ app.get("/api/v1/tours", (req, res) => {
             tours: tours,
         },
     });
-});
-// get one tour
-app.get("/api/v1/tours/:id", (req, res) => {
+};
+const getTour = (req, res) => {
     const tour = tours.find((el) => el.id === +req.params.id);
 
     res.status(200).json({
@@ -32,9 +31,8 @@ app.get("/api/v1/tours/:id", (req, res) => {
             tour,
         },
     });
-});
-// routing-post
-app.post("/api/v1/tours", (req, res) => {
+};
+const postTour = (req, res) => {
     // create new id
     const newId = tours[tours.length - 1].id + 1;
     // create new tour
@@ -60,9 +58,8 @@ app.post("/api/v1/tours", (req, res) => {
             });
         }
     );
-});
-// routing-patch
-app.path("/api/v1/tours/:id", (req, res) => {
+};
+const updateTour = (req, res) => {
     res.status(200).json({
         status: "success",
         date: new Date().toString(),
@@ -70,9 +67,8 @@ app.path("/api/v1/tours/:id", (req, res) => {
             tour: "Update your tour here !!!",
         },
     });
-});
-// routing-delete
-app.delete("/api/v1/tours/:id", (req, res) => {
+};
+const deleteTour = (req, res) => {
     res.status(204).json({
         status: "success",
         date: new Date().toString(),
@@ -80,7 +76,13 @@ app.delete("/api/v1/tours/:id", (req, res) => {
             tour: null,
         },
     });
-});
+};
+// routing
+app.route("/api/v1/tours").get(getAllTours).post(postTour);
+app.route("/api/v1/tours/:id")
+    .get(getTour)
+    .patch(updateTour)
+    .delete(deleteTour);
 // listen on that
 app.listen(PORT, () => {
     console.log("Server is running ...");
