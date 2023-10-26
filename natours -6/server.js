@@ -71,6 +71,16 @@ app.path("/api/v1/tours/:id", (req, res) => {
         },
     });
 });
+// routing-delete
+app.delete("/api/v1/tours/:id", (req, res) => {
+    res.status(204).json({
+        status: "success",
+        date: new Date().toString(),
+        data: {
+            tour: null,
+        },
+    });
+});
 // listen on that
 app.listen(PORT, () => {
     console.log("Server is running ...");
