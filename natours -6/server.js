@@ -61,6 +61,16 @@ app.post("/api/v1/tours", (req, res) => {
         }
     );
 });
+// routing-patch
+app.path("/api/v1/tours/:id", (req, res) => {
+    res.status(200).json({
+        status: "success",
+        date: new Date().toString(),
+        data: {
+            tour: "Update your tour here !!!",
+        },
+    });
+});
 // listen on that
 app.listen(PORT, () => {
     console.log("Server is running ...");
