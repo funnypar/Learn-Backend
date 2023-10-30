@@ -117,17 +117,17 @@ const deleteUser = (req, res) => {
     });
 };
 // routing
-app.route("/api/v1/tours").get(getAllTours).post(postTour);
-app.route("/api/v1/tours/:id")
-    .get(getTour)
-    .patch(updateTour)
-    .delete(deleteTour);
+const tourRouter = express.Router();
+const userRouter = express.Router();
+app.use("/api/v1/tours", tourRouter);
+app.use("/api/v1/users", userRouter);
 
-app.route("/api/v1/users").get(getAllUsers).post(postUser);
-app.route("/api/v1/users/:id")
-    .get(getUser)
-    .patch(updateUser)
-    .delete(deleteUser);
+tourRouter.route("/").get(getAllTours).post(postTour);
+tourRouter.route("/:id").get(getTour).patch(updateTour).delete(deleteTour);
+
+userRouter.route("/").get(getAllUsers).post(postUser);
+userRouter.route("/:id").get(getUser).patch(updateUser).delete(deleteUser);
+
 // listen on that
 app.listen(PORT, () => {
     console.log("Server is running ...");
