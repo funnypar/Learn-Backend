@@ -1,6 +1,8 @@
 // ----------------------------------- Core Modules -----------------------------
 const fs = require("fs");
 const express = require("express");
+// ----------------------------------- 3rd Party Libraries ----------------------
+const morgan = require("morgan");
 // ----------------------------------- Varaibles --------------------------------
 const PORT = 8000;
 // ----------------------------------- Datas ------------------------------------
@@ -9,8 +11,9 @@ const tours = JSON.parse(
 );
 // ----------------------------------- App --------------------------------------
 const app = express();
+app.use(morgan("dev"));
 app.use(express.json());
-// ----------------------------------- Functions --------------------------------
+// ------------------------------------ Tours Functions -------------------------
 const getAllTours = (req, res) => {
     res.status(200).json({
         status: "success",
@@ -77,12 +80,54 @@ const deleteTour = (req, res) => {
         },
     });
 };
+// ----------------------------------- User Functions ------------------------------
+const getAllUsers = (req, res) => {
+    res.status(500).json({
+        status: "Server Error",
+        date: new Date().toString(),
+        message: "This route has not implemented !!!",
+    });
+};
+const postUser = (req, res) => {
+    res.status(500).json({
+        status: "Server Error",
+        date: new Date().toString(),
+        message: "This route has not implemented !!!",
+    });
+};
+const getUser = (req, res) => {
+    res.status(500).json({
+        status: "Server Error",
+        date: new Date().toString(),
+        message: "This route has not implemented !!!",
+    });
+};
+const updateUser = (req, res) => {
+    res.status(500).json({
+        status: "Server Error",
+        date: new Date().toString(),
+        message: "This route has not implemented !!!",
+    });
+};
+const deleteUser = (req, res) => {
+    res.status(500).json({
+        status: "Server Error",
+        date: new Date().toString(),
+        message: "This route has not implemented !!!",
+    });
+};
 // routing
 app.route("/api/v1/tours").get(getAllTours).post(postTour);
 app.route("/api/v1/tours/:id")
     .get(getTour)
     .patch(updateTour)
     .delete(deleteTour);
+
+app.route("/api/v1/users").get(getAllUsers).post(postUser);
+app.route("/api/v1/users/:id")
+    .get(getUser)
+    .patch(updateUser)
+    .delete(deleteUser);
 // listen on that
 app.listen(PORT, () => {
     console.log("Server is running ...");
